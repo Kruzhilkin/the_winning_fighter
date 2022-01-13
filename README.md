@@ -28,3 +28,9 @@ Column definitions:
     Fight_type is which weight class and whether it's a title bout or not
     Winner is the winner of the fight
 
+Docker command:
+    docker ps
+    docker-compose build
+    docker-compose up
+    docker exec -it <mycontainer> bash
+    docker exec -it the_winning_fighter_flask_1 bash
