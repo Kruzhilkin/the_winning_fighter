@@ -34,3 +34,5 @@ Docker command:
     docker-compose up
     docker exec -it <mycontainer> bash
     docker exec -it the_winning_fighter_flask_1 bash
+
+    docker exec -it the_winning_fighter_flask_1 python train_model.py
