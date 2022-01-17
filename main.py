@@ -58,7 +58,6 @@ def predict(data, pipeline, blue_fighter, red_fighter, weightclass, rounds, titl
 def prediction_winner(params):
     try:
         blue_fighter, red_fighter, weightclass, rounds = params.split(',')
-        #print(blue_fighter)
         name, percent = predict(
             data, 
             model, 
@@ -90,10 +89,26 @@ def submit():
     if form.validate_on_submit():
         f = form.file.data
         filename = form.name.data + '.txt'
-        f.save(os.path.join(filename))
+        #f.save(os.path.join(filename))
+
+        df = pd.read_csv(f, header=None, on_bad_lines='skip')
+        with open(filename, 'w+') as f:
+
+            for i in range(len(df.index)):
+                name, percent = predict(
+                    data, 
+                    model, 
+                    df.iloc[i][0],
+                    df.iloc[i][1],
+                    df.iloc[i][2],
+                    df.iloc[i][3],
+                    True)
+                result = f'The predicted winner is <b>{name}</b> with a probability of <b>{percent}%</b>'
+                f.write(result + '\n')
+            
 
 
-        return (str(form.name.data))
+        return f'file {filename} uploaded'
     return render_template('submit.html', form=form)
 
 @app.route('/show_image/')
