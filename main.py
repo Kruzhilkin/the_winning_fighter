@@ -1,9 +1,8 @@
-from flask import Flask
+from flask import Flask, abort, redirect, url_for, render_template
 from joblib import dump, load
 import re
 import numpy as np
 import pandas as pd
-import requests
 
 data = pd.read_csv('data/data.csv')
 model = load('model_forest.joblib') 
@@ -57,17 +56,45 @@ def predict(data, pipeline, blue_fighter, red_fighter, weightclass, rounds, titl
 
 @app.route('/prediction_winner/<params>')
 def prediction_winner(params):
-    blue_fighter, red_fighter, weightclass, rounds = params.split(',')
-    print(blue_fighter)
-    name, percent = predict(
-        data, 
-        model, 
-        blue_fighter.replace('_', ' '), 
-        red_fighter.replace('_', ' '), 
-        weightclass, 
-        rounds, 
-        True)
+    try:
+        blue_fighter, red_fighter, weightclass, rounds = params.split(',')
+        #print(blue_fighter)
+        name, percent = predict(
+            data, 
+            model, 
+            blue_fighter.replace('_', ' '), 
+            red_fighter.replace('_', ' '), 
+            weightclass, 
+            rounds, 
+            True)
+    except:
+        return redirect(url_for('bad_request'))
     return f'The predicted winner is <b>{name}</b> with a probability of <b>{percent}%</b>'
+
+from flask_wtf import FlaskForm
+from wtforms import StringField, FileField
+from wtforms.validators import DataRequired
+from werkzeug.utils import secure_filename
+
+import os
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
+
+class MyForm(FlaskForm):
+    name = StringField('name', validators=[DataRequired()])
+    file = FileField()
+
+@app.route('/submit', methods=['GET', 'POST'])
+def submit():
+    form = MyForm()
+    if form.validate_on_submit():
+        f = form.file.data
+        filename = form.name.data + '.txt'
+        f.save(os.path.join(filename))
+
+
+        return (str(form.name.data))
+    return render_template('submit.html', form=form)
 
 @app.route('/show_image/')
 def show_image():
@@ -79,3 +106,7 @@ def show_image():
     #else:
     #    print('An error has occurred.')
     return '<img src="/static/Джон-Джонс.png" alt="lorem">'
+
+@app.route('/badrequest400')
+def bad_request():
+    return abort(400)
