@@ -71,12 +71,11 @@ def prediction_winner(params):
 
 @app.route('/show_image/')
 def show_image():
-
-    response = requests.get('https://api.github.com')
-    response.content
-
-    if response:
-        print('Success!')
-    else:
-        print('An error has occurred.')
+    #response = requests.get('https://www.ufc-time.ru/wp-content/uploads/2020/03/Дональд-Серроне.png', stream=True)
+    #response.content
+    #<img src="/static/Джон-Джонс.png" alt="lorem">
+    #if response:
+    #    print('Success!')
+    #else:
+    #    print('An error has occurred.')
     return '<img src="/static/Джон-Джонс.png" alt="lorem">'
