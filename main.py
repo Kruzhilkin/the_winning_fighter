@@ -1,4 +1,4 @@
-from flask import Flask, abort, redirect, url_for, render_template
+from flask import Flask, abort, redirect, url_for, render_template,send_file
 from joblib import dump, load
 import re
 import numpy as np
@@ -98,9 +98,9 @@ def submit():
                 name, percent = predict(
                     data, 
                     model, 
-                    df.iloc[i][0],
-                    df.iloc[i][1],
-                    df.iloc[i][2],
+                    df.iloc[i][0].strip(),
+                    df.iloc[i][1].strip(),
+                    df.iloc[i][2].strip(),
                     df.iloc[i][3],
                     True)
                 result = f'The predicted winner is <b>{name}</b> with a probability of <b>{percent}%</b>'
@@ -108,7 +108,11 @@ def submit():
             
 
 
-        return f'file {filename} uploaded'
+        #return f'file {filename} uploaded'
+        return send_file(filename,
+                            mimetype='text/csv',
+                            attachment_filename=filename,
+                            as_attachment=True)
     return render_template('submit.html', form=form)
 
 @app.route('/show_image/')
