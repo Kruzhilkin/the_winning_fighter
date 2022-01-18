@@ -1,4 +1,4 @@
-from flask import Flask, abort, redirect, url_for, render_template,send_file
+from flask import Flask, abort, redirect, url_for, render_template,send_file, request
 from joblib import dump, load
 import re
 import numpy as np
@@ -9,9 +9,9 @@ model = load('model_forest.joblib')
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+# @app.route("/")
+# def hello_world():
+#     return "<p>Hello, World!</p>"
 
 def predict(data, pipeline, blue_fighter, red_fighter, weightclass, rounds, title_bout=False): 
     
@@ -129,3 +129,42 @@ def show_image():
 @app.route('/badrequest400')
 def bad_request():
     return abort(400)
+
+@app.route('/test1')
+def index():
+    weight_class = []
+    r_fighter = []
+    b_fighter = []
+    for i in data['weight_class'].unique():
+            weight_class.append({'name':str(i)})
+    for i in data['R_fighter']:
+        r_fighter.append({'name': str(i)})
+    for i in data['B_fighter']:
+        b_fighter.append({'name': str(i)})
+    rounds = [{'name': 3}, {'name': 5}]
+    data_temp = [weight_class, r_fighter, b_fighter, rounds]
+    return render_template(
+        'index.html',
+        #data=[{'name':'red'}, {'name':'green'}, {'name':'blue'}])
+        data = data_temp)
+
+
+@app.route("/" , methods=['GET', 'POST'])
+def test():
+    weight_class = request.form.get('weight_class')
+    r_fighter = request.form.get('r_fighter')
+    b_fighter = request.form.get('b_fighter')
+    rounds = request.form.get('rounds')
+    try:
+        name, percent = predict(
+            data, 
+            model, 
+            b_fighter, 
+            r_fighter, 
+            weight_class, 
+            rounds, 
+            True)
+    except:
+        return redirect(url_for('bad_request'))
+    return f'The predicted winner is <b>{name}</b> with a probability of <b>{percent}%</b>'
+
