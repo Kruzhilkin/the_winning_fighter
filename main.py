@@ -71,7 +71,7 @@ def prediction_winner(params):
     return f'The predicted winner is <b>{name}</b> with a probability of <b>{percent}%</b>'
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, FileField
+from wtforms import StringField, FileField, SelectField
 from wtforms.validators import DataRequired
 from werkzeug.utils import secure_filename
 
@@ -143,11 +143,39 @@ def index():
         b_fighter.append({'name': str(i)})
     rounds = [{'name': 3}, {'name': 5}]
     data_temp = [weight_class, r_fighter, b_fighter, rounds]
+
+
+    form = MyForm()
+    if form.validate_on_submit():
+        f = form.file.data
+        filename = form.name.data + '.txt'
+        #f.save(os.path.join(filename))
+
+        df = pd.read_csv(f, header=None, on_bad_lines='skip')
+        with open(filename, 'w+') as f:
+
+            for i in range(len(df.index)):
+                name, percent = predict(
+                    data, 
+                    model, 
+                    df.iloc[i][0].strip(),
+                    df.iloc[i][1].strip(),
+                    df.iloc[i][2].strip(),
+                    df.iloc[i][3],
+                    True)
+                result = f'The predicted winner is <b>{name}</b> with a probability of <b>{percent}%</b>'
+                f.write(result + '\n')
+
+        return send_file(filename,
+                            mimetype='text/csv',
+                            attachment_filename=filename,
+                            as_attachment=True)
+
+
     return render_template(
         'index.html',
         #data=[{'name':'red'}, {'name':'green'}, {'name':'blue'}])
-        data = data_temp)
-
+        data = data_temp, form = form)
 
 @app.route("/" , methods=['GET', 'POST'])
 def test():
@@ -167,4 +195,3 @@ def test():
     except:
         return redirect(url_for('bad_request'))
     return f'The predicted winner is <b>{name}</b> with a probability of <b>{percent}%</b>'
-

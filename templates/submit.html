@@ -1,3 +1,4 @@
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 <form method="POST" action="/submit" enctype=multipart/form-data>
     {{ form.hidden_tag() }}
     {{ form.name.label }} {{ form.name(size=20) }}
