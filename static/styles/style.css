@@ -1,10 +1,22 @@
 body {
+  font-size: 1.5em;
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: rgb(50, 50, 50);
   background: #f2f2f2;
+}
+
+h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+  letter-spacing: -.1rem;
+  margin-bottom: 2rem;
 }
 
 .selectdiv {
   position: relative;  
-  float: left;
+  /*float: left;*/
   min-width: 200px;
   margin: 15px;
   border-radius: 3px;
@@ -55,7 +67,7 @@ body {
 
 
 .bg{
-  letter-spacing: 1px;
+  /*letter-spacing: 1px;
   background-color: #ffffff;
   border: 1px solid #cccccc;
   box-sizing: border-box;
@@ -66,7 +78,24 @@ body {
   float: right;
   margin: 5px 0px;
   padding: 0px 24px;
-  font-size: 16px; 
+  font-size: 16px;*/
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: rgb(112, 112, 112);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 3px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box; 
 }
 
 .bg:hover{
