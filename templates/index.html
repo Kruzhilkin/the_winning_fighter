@@ -6,10 +6,10 @@
     <div style="text-align: center;">
       <form class="form-inline" method="POST" action="{{ url_for('test') }}">
         <div style="width: 30%; display: inline-block; text-align: center;">
-          <div>
+          <div style="text-align: center;">
             <label style="font-size: 25px;">Select Weightclass</label>
-            <div class="selectdiv">
-              <select name="weight_class" class="custom-select sources">
+            <div class="selectdiv" style="margin:3% 25% 0 25%; width:50%;";>
+              <select name="weight_class" style="text-align-last: center;">
                 {% for o in data[0] %}
                 <option value="{{ o.name }}">{{ o.name }}</option>
                 {% endfor %}
@@ -17,10 +17,12 @@
             </div>
           </div>
           <br>
+          <br>
+          <br>
           <div>
-            <label style="font-size: 25px;">Select Number of Rounds</label>
-            <div class="selectdiv">
-              <select name="rounds" class="option">
+            <label style="font-size: 25px; display: inline-block;">Select Number of Rounds</label>
+            <div class="selectdiv" style="margin:3% 25% 0 25%; width:50%;">
+              <select name="rounds" class="option"  style="text-align-last: center;">
               {% for o in data[3] %}
               <option value="{{ o.name }}">{{ o.name }}</option>
               {% endfor %}
@@ -31,7 +33,7 @@
         
         <div style="width: 30%; float: left; text-align: center;">
           <span class="input-group-addon">Select Fighter Red Corner (Favourite)</span>
-          <div class="selectdiv">
+          <div class="selectdiv" style="margin:3% 25% 0 25%; width:50%;">
             <select name="r_fighter" class="option">
               {% for o in data[1] %}
               <option value="{{ o.name }}">{{ o.name }}</option>
@@ -41,7 +43,7 @@
         </div>        
         <div style="width: 30%; float: right; text-align: center;">
           <span class="input-group-addon">Select Fighter Blue Corner (Underdog)</span>
-          <div class="selectdiv">
+          <div class="selectdiv" style="margin:3% 25% 0 25%; width:50%;">
             <select name="b_fighter" class="option">
             {% for o in data[2] %}
             <option value="{{ o.name }}">{{ o.name }}</option>      
