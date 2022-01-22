@@ -1,0 +1,13 @@
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style_predict.css') }}">
+
+<!doctype html>
+<title>Predict</title>
+{% if name %}
+  <h1>{{ name[0] }}</h1>
+  <h2>The predicted winner is <b>{{ name[0] }}</b> with a probability of <b>{{ name[1] }}%</b></h2>
+{% else %}
+  <h2>there are some problems here</h2>  
+{% endif %}
+<div class="link">
+  <a href="/test1">predict more</a>  
+</div>
