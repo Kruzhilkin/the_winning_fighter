@@ -130,7 +130,7 @@ def show_image():
 def bad_request():
     return abort(400)
 
-@app.route('/test1')
+@app.route('/')
 def index():
     weight_class = []
     r_fighter = []
@@ -177,8 +177,8 @@ def index():
         #data=[{'name':'red'}, {'name':'green'}, {'name':'blue'}])
         data = data_temp, form = form)
 
-@app.route("/" , methods=['GET', 'POST'])
-def test():
+@app.route("/predictpage" , methods=['GET', 'POST'])
+def pred():
     weight_class = request.form.get('weight_class')
     r_fighter = request.form.get('r_fighter')
     b_fighter = request.form.get('b_fighter')

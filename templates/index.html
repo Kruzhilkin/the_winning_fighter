@@ -1,10 +1,12 @@
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+<!doctype html>
+<title>UFC Predictions</title>
 <body>
   <div>
     <h1 style="text-align: center;">UFC Predictions</h1>
     <br>
     <div style="text-align: center;">
-      <form class="form-inline" method="POST" action="{{ url_for('test') }}">
+      <form class="form-inline" method="POST" action="{{ url_for('pred') }}">
         <div style="width: 30%; display: inline-block; text-align: center;">
           <div style="text-align: center;">
             <label style="font-size: 25px;">Select Weightclass</label>
