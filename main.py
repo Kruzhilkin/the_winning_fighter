@@ -69,7 +69,7 @@ def prediction_winner(params):
     except:
         return redirect(url_for('bad_request'))
     #return f'The predicted winner is <b>{name}</b> with a probability of <b>{percent}%</b>'
-    return render_template('predict.html', name=[name, percent])
+    return render_template('predwithparams.html', name=[name, percent])
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, FileField, SelectField
