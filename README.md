@@ -29,6 +29,7 @@ Column definitions:
     Winner is the winner of the fight
 
 Docker command:
+
     docker ps
     docker-compose build
     docker-compose up
